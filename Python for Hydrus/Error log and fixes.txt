@@ -1,0 +1,22 @@
+Notes:
+12/5/18
+Hyrdrus runs over all iterations, but ECe is not changing (as it should).
+Not sure why.
+12/12/18
+Hydrus completes one iteration successfully, but cannot write output files
+HydrusRun_ver2 was created to attempt running from H1D_UNSC.EXE directory
+-runs one iteration successfully, and writes complete output files, but cannot
+ run the next iteration.
+
+Errors I've come across:
+1.
+Hydrus produces:
+" Error when writing to an output file !"
+
+This message is displayed when HYDRUS cannot write to an output file, which means that it likely cannot find it. Thus, there is likely something wrong with the path, or similar. If you can restart the code with the same parameters and there is no problem, then I think that the problem must be with the project folder and the opening/closing of output files from there. This stuff (project folder) is usually accomplished by GUI (output files are open by the computational module) and if you run the computational module from MATLAB, then you need to take care of that yourself. -Jirka
+
+Python error often appears as this:
+[Errno 13] Permission denied: 'C:\\Users\\Public\\Documents\\PC-Progress\\Hydrus-1D 4.xx\\Projects\\Gypsum\\SELECTOR.IN'
+
+This suggests something with the python module is being denied access to write the next SELECTOR.IN file.
+It is important to note that the first iteration runs successfully and creates a complete set of output files.
