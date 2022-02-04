@@ -1,0 +1,61 @@
+Update Log:
+12/5/18
+    -Merged all functions into class.
+    -Hyrdrus runs over all iterations, but ECe is not changing (as it should).
+     Not sure why.
+12/12/18
+    -Hydrus completes one iteration successfully, but cannot write output files
+    -HydrusRun_ver2 was created to attempt running from H1D_UNSC.EXE directory
+    -runs one iteration successfully, and writes complete output files, but
+     cannot run the next iteration.
+12/18/18
+    -Hydrus completes all iterations successfully! Now we need to check the
+     quality of the data by plotting some things:
+    -ECe v. Gypsum content with colorization for water contents for one soil
+    -ECe v. Gypsum content with colorization for water contents for all soils
+    New Efficiency Issues:
+    -Running graph_output() results in having to run final_data() 4 separate
+     times because of the way it is called with self.final_data() in the
+     function. There is probably a way to prevent this from happening by saving
+     the dataframe after running final_data() just once.
+12/20/18
+    -Moving a little backwards. We decided it wasn't good to just select the
+     first EC from the Equil.out file and instead import all of it, in case in
+     the future someone might want to look at the entire soil profile at
+     different times. This resulted in changing the _run_batch() function, but
+     it's not working properly.
+    -_run_batch() creates a giant DataFrame, but should only produce one of 1176
+     (294 rows from input * 4 rows from Equil.out = 1,176 rows). Instead we have
+     a massive dataframe with 43,932 rows, but we're unsure why.
+01/02/2019
+    -fixed merge issue. More than one index was needed to merge correctly.
+     So instead of merging on just 'soil_type', gypsum and VWC were also merged
+     on.
+    -consolidated ssat and paste ion values into single columns to allow hydrus
+     to run each sample separately.  This will make hydrus simulate a paste, and
+     then simulate the field condition without mising ions from both.
+    -implemented graph_output() function with customizable x and y values
+    -need to improve graph_output() to include separate line fits for paste and
+     ssat points
+02/11/19
+    -need to figure out why NaN's are produced in input dataframe
+        -still unknown
+    -need to optimize gypsum so that the 1:1 fit is better
+        -this might not be the case, I might just take observed values from the
+         CSU soils lab for both CaSO4 and CaCO3
+    -then I need to compare the same sample at different water contents
+        -completed, added this functionality in self._inputs()
+02/12/19
+    -need to update self.graph_output() so that we can graph different moistures
+        -think that faceting would be good?
+        -can't figure out why slicing my group isn't working in the graph_output
+02/18/19
+    -fixed the graphing a bit
+        -lost colorization
+        -still can't condition by shape
+        -can't separate moisture levels
+    -maybe I don't need to group anything? I can probably just graph the df
+    -DONE: try to include CO2 into datafram as input for paste vs. ssat
+        -ambient CO2 (410ppm), ssat CO2 (410*1.05 = 430.5ppm)
+        -CO2 is lower in lab water than in soil water
+        -Im confused what hydrus CO2 is: ambient or solution?
